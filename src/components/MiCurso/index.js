@@ -10,7 +10,7 @@ function MiCurso(){
     return <>
         <h3>{curso.name}</h3>
         <p>{curso.description}</p>
-        <button onClick={()=>  navigate(-1) } >
+        <button onClick={()=>  navigate("/cursos") } >
             volver
         </button>
     </>
