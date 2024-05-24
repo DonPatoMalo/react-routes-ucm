@@ -1,9 +1,10 @@
-import { Link } from "react-router-dom"
+import { Link, Outlet } from "react-router-dom"
 import { cursos } from "../data/cursos"
 
 function Cursos(){
     return <>
         <h3>Mis Cursos</h3>
+        
         {
             cursos.map( (item) => (
                 <Link to={item.url}>
@@ -11,6 +12,8 @@ function Cursos(){
                 </Link>
             )  )
         }
+<Outlet/>
+       
     </>
 }
 
