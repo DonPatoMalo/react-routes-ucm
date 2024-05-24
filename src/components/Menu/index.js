@@ -25,5 +25,6 @@ const routes = [];
 routes.push({to:"/", text:"Home"})
 routes.push({to:"/page1", text:"Pagina 1"})
 routes.push({to:"/page2", text:"Pagina 2"})
+routes.push({to:"/cursos", text:"Mis Cursos"})
 
 export {Menu}
