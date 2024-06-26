@@ -12,14 +12,15 @@ function App() {
   return (
     <HashRouter>
       <Menu />
+
       <Routes>
-        <Route path="/" element={<Home/>}/> 
-        <Route path="/page1" element={<Page1 />}/> 
-        <Route path="/page2" element={<Page2 />}/> 
+        <Route path="/" element={<Home/>}/>
+        <Route path="/Home" element={<Page1 />}/>
+        <Route path="/About" element={<Page2 />}/>
         <Route path="/cursos" element={<Cursos />}>
-          <Route path=":url" element={<MiCurso />}/> 
-        </Route> 
-        <Route path="*" element={<p>Ups, no existe la ruta</p>}/> 
+          <Route path=":url" element={<MiCurso />}/>
+        </Route>
+        <Route path="*" element={<p>Ups, no existe la ruta</p>}/>
       </Routes>
     </HashRouter>
 

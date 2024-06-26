@@ -1,30 +1,57 @@
 import { Link, NavLink } from "react-router-dom";
+import {useState} from "react";
 
 function Menu(){
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+    const handleLogin = () => {
+        setIsLoggedIn(true);
+    }
+
+    const handleLogout = () => {
+        setIsLoggedIn(false);
+    }
+
+
+
+    const commonLinks = [
+        { name: 'Inicio', href:'/' },
+        { name: 'Coffee', href:'/page1' },
+        { name: 'Acerca de', href:'/page1' },
+    ]
+
+    const loggedInLinks = [
+        { name: 'Profile', href:'/profile' },
+        { name: 'Logout', onClick: handleLogout },
+    ]
+
+    const adminLinks = [
+        { name: 'Gestionar Coffee', href:'/gestionarcoffee' },
+        { name: 'Clientes', href:'/clientes' },
+    ]
+    const loggedOutLinks = [
+        { name: 'Iniciar Secion', onClick: handleLogin },
+    ]
+
+    const routes = isLoggedIn ? [...commonLinks, ...loggedInLinks] : [...commonLinks, ...loggedOutLinks];
+
     return <>
         <h2>Menu</h2>
         <ul>
-            {
-             routes.map( (item, index)=>(
+            {routes.map((link, index) => (
                 <li key={index}>
-                    <NavLink 
-                        style={({isActive}) => ({color:isActive?"green":"grey"})}
-                        to={item.to}>
-                        {item.text}
-                    </NavLink>
+                    {link.href ? (
+                        <a href={link.href}>{link.name}</a>
+                    ) : (
+                        <button onClick={link.onClick}>{link.name}</button>
+                    )}
                 </li>
-             ) )
-            }
+            ))}
         </ul>
 
     </>
 }
 
-const routes = [];
 
-routes.push({to:"/", text:"Home"})
-routes.push({to:"/page1", text:"Pagina 1"})
-routes.push({to:"/page2", text:"Pagina 2"})
-routes.push({to:"/cursos", text:"Mis Cursos"})
 
 export {Menu}
