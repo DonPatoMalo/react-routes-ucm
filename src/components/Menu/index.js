@@ -1,55 +1,88 @@
-import { Link, NavLink } from "react-router-dom";
 import {useState} from "react";
+import { Link } from "react-router-dom";
+import axios from "axios";
 
 function Menu(){
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-    const handleLogin = () => {
-        setIsLoggedIn(true);
-    }
+
+
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [role, setRole] = useState(null); // 'admin' or 'client'
+    const [error, setError] = useState(null); // To handle login errors
+
+    const handleLogin = async (userRole) => {
+        try {
+            const response = await axios.post('localhost:8080/api/auth/login',
+                {
+                    username: "administrador",
+                    password: "administrador",
+                });
+            console.log(response);
+            if (response.data.success) {
+                setIsLoggedIn(true);
+                setRole(response.data.role);
+            } else {
+                setError('Login failed');
+            }
+        } catch (err) {
+            setError('An error occurred during login');
+        }
+    };
 
     const handleLogout = () => {
         setIsLoggedIn(false);
-    }
-
-
+        setRole(null);
+        setError(null); // Clear any existing error
+    };
 
     const commonLinks = [
-        { name: 'Inicio', href:'/' },
-        { name: 'Coffee', href:'/page1' },
-        { name: 'Acerca de', href:'/page1' },
-    ]
+        { name: 'Home', href: '/' },
+        { name: 'About', href: '/about' },
+        { name: 'Ingresar', href: '/Login'},
+    ];
 
-    const loggedInLinks = [
-        { name: 'Profile', href:'/profile' },
+    const clientLinks = [
+        { name: 'Client Dashboard', href: '/client-dashboard' },
         { name: 'Logout', onClick: handleLogout },
-    ]
+    ];
 
     const adminLinks = [
-        { name: 'Gestionar Coffee', href:'/gestionarcoffee' },
-        { name: 'Clientes', href:'/clientes' },
-    ]
+        { name: 'Admin Dashboard', href: '/admin-dashboard' },
+        { name: 'User Management', href: '/user-management' },
+        { name: 'Logout', onClick: handleLogout },
+    ];
+
     const loggedOutLinks = [
-        { name: 'Iniciar Secion', onClick: handleLogin },
-    ]
+        { name: 'Login as Client', onClick: () => handleLogin('client') },
+        { name: 'Login as Admin', onClick: () => handleLogin('admin') },
+    ];
 
-    const routes = isLoggedIn ? [...commonLinks, ...loggedInLinks] : [...commonLinks, ...loggedOutLinks];
+    let routes = commonLinks;
+    if (isLoggedIn) {
+        if (role === 'admin') {
+            routes = [...routes, ...adminLinks];
+        } else if (role === 'client') {
+            routes = [...routes, ...clientLinks];
+        }
+    } else {
+        routes = [...routes, ...loggedOutLinks];
+    }
 
-    return <>
+    return <div className={"navbar"}>
         <h2>Menu</h2>
-        <ul>
+        <ul className="navbar-list">
             {routes.map((link, index) => (
-                <li key={index}>
+                <li key={index} className={"navbar-item"}>
                     {link.href ? (
-                        <a href={link.href}>{link.name}</a>
+                        <a href={link.href} className={"navbar-link"}>{link.name}</a>
                     ) : (
-                        <button onClick={link.onClick}>{link.name}</button>
+                        <button onClick={link.onClick} className={"navbar-button"}>{link.name}</button>
                     )}
                 </li>
             ))}
         </ul>
 
-    </>
+    </div>
 }
 
 
