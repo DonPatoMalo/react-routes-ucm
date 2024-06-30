@@ -10,6 +10,7 @@ import { MiCurso } from './components/MiCurso';
 import  Login from './pages/Login';
 
 import Footer from "./components/Footer";
+import GestionCoffee from "./pages/GestionCoffee";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
           <Route path="/inicio" element={< Home />}/>
           <Route path="/menu" element={<Page2 />}/>
           <Route path="/login" element={<Login />}/>
+          <Route path="/gestion-coffees" element={<GestionCoffee />}/>
           <Route path="/cursos" element={<Cursos />}>
               <Route path=":url" element={<MiCurso />}/>
         </Route>

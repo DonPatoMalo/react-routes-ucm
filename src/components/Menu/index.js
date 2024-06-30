@@ -2,8 +2,8 @@ import { useState } from "react";
 import { Link } from 'react-router-dom';
 
 function Menu() {
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
-    const [role, setRole] = useState(null); // 'admin' or 'client'
+    const [isLoggedIn, setIsLoggedIn] = useState(true);
+    const [role, setRole] = useState('admin'); // 'admin' or 'client' default null
     const [error, setError] = useState(null); // To handle login errors
 
     const handleLogout = () => {
@@ -28,8 +28,8 @@ function Menu() {
     ];
 
     const adminLinks = [
-        { name: 'Admin Dashboard', to: '/admin-dashboard' },
-        { name: 'User Management', to: '/user-management' },
+        { name: 'Gestion Coffees', to: '/gestion-coffees' },
+        { name: 'Clientes', to: '/user-management' },
         { name: 'Logout', onClick: handleLogout },
     ];
 
