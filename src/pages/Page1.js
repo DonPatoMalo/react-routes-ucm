@@ -4,7 +4,7 @@ import { getUsers } from "../services/api";
 function Page1(){
 
     const [personas, setPersonas]= React.useState([]);
-
+    console.log('ex');
 
     React.useEffect( () => {
         async function obtenerUsuarios(){

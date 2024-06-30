@@ -20,9 +20,9 @@ function App() {
 
 
           <Route path="/" element={<Home/>}/>
-          <Route path="/Home" element={<Page1 />}/>
-          <Route path="/About" element={<Page2 />}/>
-          <Route path="/Login" element={<Login/>}/>
+          <Route path="/inicio" element={< Home />}/>
+          <Route path="/menu" element={<Page2 />}/>
+          <Route path="/login" element={<Login />}/>
           <Route path="/cursos" element={<Cursos />}>
               <Route path=":url" element={<MiCurso />}/>
         </Route>
