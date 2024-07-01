@@ -11,6 +11,7 @@ import  Login from './pages/Login';
 
 import Footer from "./components/Footer";
 import GestionCoffee from "./pages/GestionCoffee";
+import Coffees from "./pages/Coffees";
 
 function App() {
   return (
@@ -22,7 +23,7 @@ function App() {
 
           <Route path="/" element={<Home/>}/>
           <Route path="/inicio" element={< Home />}/>
-          <Route path="/menu" element={<Page2 />}/>
+          <Route path="/menu" element={<Coffees />}/>
           <Route path="/login" element={<Login />}/>
           <Route path="/gestion-coffees" element={<GestionCoffee />}/>
           <Route path="/cursos" element={<Cursos />}>

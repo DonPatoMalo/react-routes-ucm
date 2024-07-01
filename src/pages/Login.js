@@ -1,9 +1,7 @@
 import React from "react";
 import Button from "react-bootstrap/Button";
 import Col from "react-bootstrap/Col";
-
 import Form from "react-bootstrap/Form";
-import axios from "axios";
 
 const Login = ()  => {
 
@@ -12,21 +10,20 @@ const Login = ()  => {
 
     async function handleSubmit(){
         try{
-            const resp =
-                await axios.post(
-                    'http://localhost:8080/api/auth/login',
-
+            const requestOptions = {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(
                     {
                         username: username,
-                        password: password,
-                    },
-                    {
-                        headers:{
-                            "Content-Type": "application/json",
-                            "Accept": "*/*"
-                        }
+                        password: password
                     })
-            console.log(resp);
+            };
+            const response = await fetch('http://localhost:8080/api/auth/login', requestOptions)
+                .then(response => response.json())
+
+            console.log(response)
+
         }catch(error){
             console.log(error);
         }

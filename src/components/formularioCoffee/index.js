@@ -5,6 +5,8 @@ import FormGroup from 'react-bootstrap/FormGroup';
 import {FormControl} from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 
+
+
 function FormularioCoffee() {
 
 
@@ -14,6 +16,8 @@ function FormularioCoffee() {
         price: null,
         file: null
     }
+
+
 
     const [formData, setFormData] = React.useState(initialState);
 
@@ -27,16 +31,28 @@ function FormularioCoffee() {
             [name]: value,
         })
     }
-
     const handleSubmit = (e) => {
         e.preventDefault();
+        try{
+            fetch('http://localhost:8080/api/coffee/create',
+                {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(
+                        formData)
+                })
+        }catch(err){
+            console.log(err);
+        }
         console.log(formData);
     }
+
 
     return (
         <div className="containerformulario"
              style={{
                  width: "15%",
+                 margin: 'auto',
             }}>
             <h3> Nuevo Coffee</h3>
             <FormGroup className="mb-3">
