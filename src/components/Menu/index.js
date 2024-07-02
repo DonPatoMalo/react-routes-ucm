@@ -1,28 +1,25 @@
-import { useState } from "react";
+import React, { useContext } from "react";
 import { Link } from 'react-router-dom';
+import { AuthContext } from "../../services/AuthContext";
 
 function Menu() {
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
-    const [role, setRole] = useState('admin'); // 'admin' or 'client' default null
-    const [error, setError] = useState(null); // To handle login errors
+    const { auth, logout } = useContext(AuthContext);
 
     const handleLogout = () => {
-        setIsLoggedIn(false);
-        localStorage.removeItem("token");
-        setRole(null);
-        setError(null); // Clear any existing error
+        logout();
     };
 
     const commonLinks = [
         { name: 'Inicio', to: '/inicio' },
         { name: 'Coffees', to: '/menu' },
-        { name: 'Acerca de', to: '/menu' }
+        { name: 'Acerca de', to: '/acerca-de' }
     ];
 
     const notLoggedInLinks = [
         { name: 'Iniciar Sesion', to: '/login' },
         { name: 'Registrate', to: '/registrate' },
-    ]
+    ];
+
     const clientLinks = [
         { name: 'Client Dashboard', to: '/client-dashboard' },
         { name: 'Logout', onClick: handleLogout },
@@ -34,14 +31,15 @@ function Menu() {
         { name: 'Logout', onClick: handleLogout },
     ];
 
-    let routes = commonLinks;
-    if (isLoggedIn) {
-        if (role === 'admin') {
+    let routes = [...commonLinks];
+
+    if (auth.token) {
+        if (auth.role === 'administrador') {
             routes = [...routes, ...adminLinks];
-        } else if (role === 'client') {
+        } else if (auth.role === 'cliente') {
             routes = [...routes, ...clientLinks];
         }
-    }else{
+    } else {
         routes = [...routes, ...notLoggedInLinks];
     }
 
@@ -62,6 +60,15 @@ function Menu() {
                         )}
                     </li>
                 ))}
+                {
+                    auth.token && (
+                        <li className="nav-item">
+                            <span onClick={handleLogout} className="nav-link" style={{ cursor: 'pointer' }}>
+                                Logout
+                            </span>
+                        </li>
+                    )
+                }
             </ul>
         </div>
     );

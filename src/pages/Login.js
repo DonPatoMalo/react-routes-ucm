@@ -1,4 +1,4 @@
-import React, {useContext} from "react";
+import React, { useState, useContext } from "react";
 import Button from "react-bootstrap/Button";
 import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
@@ -7,30 +7,27 @@ import { AuthContext } from "../services/AuthContext";
 import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
-    const [username, setUsername] = React.useState("");
-    const [password, setPassword] = React.useState("");
+    const [username, setUsername] = useState("");
+    const [password, setPassword] = useState("");
 
     const { setToken } = useContext(AuthContext);
-    const navigate = useNavigate(); // Use useNavigate here
+    const navigate = useNavigate();
 
     async function handleSubmit(e) {
         e.preventDefault();
-        try{
+        try {
             const resp = await login({ username, password });
-
-            if (resp) {
+            console.log(resp);
+            if (resp && resp.token) {
                 console.log(resp);
-                setToken(resp);
+                setToken(resp.token, resp.role); // Set both token and role
                 navigate("/"); // Redirect to the home page
             } else {
                 console.error("Login failed");
             }
-            console.log(JSON.parse(localStorage.getItem('token')));
-        }
-        catch (e) {
+        } catch (e) {
             console.log(e);
         }
-
     }
 
     return (

@@ -1,17 +1,25 @@
-import React, { useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import Button from "react-bootstrap/Button";
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
-import {Dropdown, DropdownDivider} from "react-bootstrap";
-import {DropdownButton} from "react-bootstrap";
+import { Dropdown, DropdownDivider } from "react-bootstrap";
+import { DropdownButton } from "react-bootstrap";
 import InputGroup from 'react-bootstrap/InputGroup';
+import axios from "axios";
+import { getCoffee } from "../../services/api";
+import { AuthContext } from "../../services/AuthContext";
 
 const CoffeQueue = () => {
-    const [data, setData] = useState([
-        { id: 1, name: 'Capicchino1', description: 'Capicchino33', price: 100000, status: 'active' },
-        { id: 2, name: 'Capicchino2', description: 'Capicchino22', price: 200000, status: 'pending' },
-        { id: 3, name: 'Capicchino3', description: 'Capicchino33', price: 300000, status: 'deleted' }
-    ]);
+    const [data, setData] = useState([]);
+    const { auth } = useContext(AuthContext);
+
+
+
+    setData(getCoffee);
+
+    useEffect(() => {
+        getCoffee();
+    }, []); // Empty dependency array ensures this runs only once on mount
 
     const [editRow, setEditRow] = useState(null);
     const [editFormData, setEditFormData] = useState({
@@ -51,6 +59,7 @@ const CoffeQueue = () => {
         setData(updatedData);
         setEditRow(null);
     };
+
     const handleStatusChange = (status) => {
         setEditFormData((prev) => ({
             ...prev, status: status
@@ -130,10 +139,9 @@ const CoffeQueue = () => {
                             </Form.Group>
                             <Form.Label>Estado</Form.Label>
                             <InputGroup className="mb-3">
-
                                 <DropdownButton
                                     variant="outline-secondary"
-                                    title={editFormData.status || "Seleccione un estado" }
+                                    title={editFormData.status || "Seleccione un estado"}
                                     id="input-group-dropdown-1"
                                     onSelect={handleStatusChange}
                                 >
