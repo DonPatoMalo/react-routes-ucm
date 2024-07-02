@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 import Button from "react-bootstrap/Button";
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
+import {Dropdown, DropdownDivider} from "react-bootstrap";
+import {DropdownButton} from "react-bootstrap";
+import InputGroup from 'react-bootstrap/InputGroup';
 
 const CoffeQueue = () => {
     const [data, setData] = useState([
@@ -47,6 +50,11 @@ const CoffeQueue = () => {
         );
         setData(updatedData);
         setEditRow(null);
+    };
+    const handleStatusChange = (status) => {
+        setEditFormData((prev) => ({
+            ...prev, status: status
+        }));
     };
 
     const handleCancel = () => {
@@ -120,15 +128,22 @@ const CoffeQueue = () => {
                                     onChange={handleEditFormChange}
                                 />
                             </Form.Group>
-                            <Form.Group controlId="formStatus">
-                                <Form.Label>Estado</Form.Label>
-                                <Form.Control
-                                    type="text"
-                                    name="status"
-                                    value={editFormData.status}
-                                    onChange={handleEditFormChange}
-                                />
-                            </Form.Group>
+                            <Form.Label>Estado</Form.Label>
+                            <InputGroup className="mb-3">
+
+                                <DropdownButton
+                                    variant="outline-secondary"
+                                    title={editFormData.status || "Seleccione un estado" }
+                                    id="input-group-dropdown-1"
+                                    onSelect={handleStatusChange}
+                                >
+                                    <Dropdown.Item eventKey={"En espera"}>En espera</Dropdown.Item>
+                                    <Dropdown.Item eventKey={"Procesando"}>Procesando</Dropdown.Item>
+                                    <Dropdown.Item eventKey={"Listo"}>Listo</Dropdown.Item>
+                                    <DropdownDivider />
+                                    <Dropdown.Item eventKey={"Eliminado"}>Eliminado</Dropdown.Item>
+                                </DropdownButton>
+                            </InputGroup>
                             <Button variant="primary" type="submit">Guardar</Button>
                             <Button variant="secondary" onClick={handleCancel}>Cancelar</Button>
                         </Form>

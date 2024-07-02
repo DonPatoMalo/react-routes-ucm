@@ -19,9 +19,24 @@ function Presentacion() {
 
     return (
         <>
-            <ul class="list-group list-group-horizontal-sm">
+            <div className="banner fix">
+                <img style={{
+                    height: "300px",
+                    width : "100%",
+                    objectFit: "cover",
+                }} src={"https://imagenes.eltiempo.com/files/image_1200_600/uploads/2018/07/18/5b4fea0fcb0b3.jpeg"} />
+            </div>
+            <ul class="" style={{
+                display: "flex",
+                padding: "10px",
+                justifyContent: 'center'
+            }}>
                 {cards.map((card, index) => (
-                    <li key={index} style={{marginBottom: '1rem'}}>
+                    <li key={index} style={{
+                        marginBottom: '1rem',
+
+
+                    }}>
                         <div className="card" style={{width: '18rem'}}>
                             <img className="card-img-top" src={card.link} alt="Card image cap"/>
                             <div className="card-body">

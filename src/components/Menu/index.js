@@ -2,12 +2,13 @@ import { useState } from "react";
 import { Link } from 'react-router-dom';
 
 function Menu() {
-    const [isLoggedIn, setIsLoggedIn] = useState(true);
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [role, setRole] = useState('admin'); // 'admin' or 'client' default null
     const [error, setError] = useState(null); // To handle login errors
 
     const handleLogout = () => {
         setIsLoggedIn(false);
+        localStorage.removeItem("token");
         setRole(null);
         setError(null); // Clear any existing error
     };
