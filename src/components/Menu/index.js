@@ -17,7 +17,7 @@ function Menu() {
 
     const notLoggedInLinks = [
         { name: 'Iniciar Sesion', to: '/login' },
-        { name: 'Registrate', to: '/registrate' },
+        { name: 'Registrate', to: '/register' },
     ];
 
     const clientLinks = [

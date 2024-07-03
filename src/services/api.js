@@ -1,4 +1,3 @@
-import React from "react";
 import {jwtDecode} from "jwt-decode";
 import axios from "axios";
 
@@ -61,3 +60,17 @@ export const getCoffee = async (token) => {
     }
 };
 
+export const getComments = async (coffeeId, token) => {
+    try{
+        const response = await axios.get(`http://localhost:8080/api/testimonials/findByCoffeeId/${coffeeId}`, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+                Accept: 'application/json',
+            },
+        });
+        return response.data;
+    }catch (e) {
+        console.log(e);
+        return null;
+    }
+};

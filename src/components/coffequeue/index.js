@@ -5,21 +5,25 @@ import Form from 'react-bootstrap/Form';
 import { Dropdown, DropdownDivider } from "react-bootstrap";
 import { DropdownButton } from "react-bootstrap";
 import InputGroup from 'react-bootstrap/InputGroup';
-import axios from "axios";
-import { getCoffee } from "../../services/api";
+import { getCoffee } from "../../services/api"; // Adjust the import path if needed
 import { AuthContext } from "../../services/AuthContext";
 
 const CoffeQueue = () => {
     const [data, setData] = useState([]);
     const { auth } = useContext(AuthContext);
 
-
-
-    setData(getCoffee);
-
     useEffect(() => {
-        getCoffee();
-    }, []); // Empty dependency array ensures this runs only once on mount
+        const fetchData = async () => {
+            try {
+                const coffeeData = await getCoffee(auth.token); // Pass the token if required
+                setData(coffeeData);
+            } catch (error) {
+                console.error("Error fetching coffee data:", error);
+            }
+        };
+
+        fetchData();
+    }, [auth.token]); // Empty dependency array ensures this runs only once on mount
 
     const [editRow, setEditRow] = useState(null);
     const [editFormData, setEditFormData] = useState({
