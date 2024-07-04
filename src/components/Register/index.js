@@ -1,65 +1,94 @@
 import React, { useState } from 'react';
-import { Modal, Button, Form } from 'react-bootstrap';
+import { Form, Button, Container, Row, Col } from 'react-bootstrap';
+import { useNavigate } from "react-router-dom";
 
-const CommentsModal = ({ show, handleClose, comments, handleAddComment, idCoffee }) => {
-    const [newComment, setNewComment] = useState({
-        username: localStorage.getItem('role') || '',
-        testimonial: '',
-        idCoffee: idCoffee
+const Register = () => {
+    const navigate = useNavigate();
+
+    const [formData, setFormData] = useState({
+        username: '',
+        password: '',
+        email: '',
+        locked: false,
+        disabled: false
     });
 
     const handleChange = (e) => {
-        const { name, value } = e.target;
-        setNewComment({
-            ...newComment,
-            [name]: value
+        const { name, value, type, checked } = e.target;
+        setFormData({
+            ...formData,
+            [name]: type === 'checkbox' ? checked : value
         });
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        handleAddComment(newComment);
-        setNewComment({ ...newComment, testimonial: '' });
+        console.log(formData)
+        try {
+            const response = await fetch('http://localhost:8080/api/auth/create', {
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                method: 'POST',
+                body: JSON.stringify(formData) // Convert formData to JSON string
+            });
+            if (response.ok) {
+                alert('Registro exitoso');
+                navigate("/");
+            } else {
+                alert('Error al registrar el usuario');
+            }
+        } catch (error) {
+            console.error('Error al enviar los datos:', error);
+            alert('Error al registrar el usuario');
+        }
     };
 
     return (
-        <Modal show={show} onHide={handleClose}>
-            <Modal.Header closeButton>
-                <Modal.Title>Opiniones</Modal.Title>
-            </Modal.Header>
-            <Modal.Body>
-                {comments.length > 0 ? (
-                    <ul>
-                        {comments.map((comment, index) => (
-                            <li key={index}>{comment.text}</li>
-                        ))}
-                    </ul>
-                ) : (
-                    <p>No comments available</p>
-                )}
-                <Form onSubmit={handleSubmit}>
-                    <Form.Group controlId="testimonial" className="mb-3">
-                        <Form.Label>Comentario:</Form.Label>
-                        <Form.Control
-                            type="text"
-                            name="testimonial"
-                            value={newComment.testimonial}
-                            onChange={handleChange}
-                            required
-                        />
-                    </Form.Group>
-                    <Button variant="primary" type="submit">
-                        Agregar Comentario
-                    </Button>
-                </Form>
-            </Modal.Body>
-            <Modal.Footer>
-                <Button variant="secondary" onClick={handleClose}>
-                    Cerrar
-                </Button>
-            </Modal.Footer>
-        </Modal>
+        <Container className="mt-5">
+            <Row className="justify-content-md-center">
+                <Col md={6}>
+                    <h2 className="text-center">Registro de Usuario</h2>
+                    <Form onSubmit={handleSubmit}>
+                        <Form.Group controlId="username" className="mb-3">
+                            <Form.Label>Nombre de Usuario:</Form.Label>
+                            <Form.Control
+                                type="text"
+                                name="username"
+                                value={formData.username}
+                                onChange={handleChange}
+                                required
+                            />
+                        </Form.Group>
+                        <Form.Group controlId="password" className="mb-3">
+                            <Form.Label>Contraseña:</Form.Label>
+                            <Form.Control
+                                type="password"
+                                name="password"
+                                value={formData.password}
+                                onChange={handleChange}
+                                required
+                            />
+                        </Form.Group>
+                        <Form.Group controlId="email" className="mb-3">
+                            <Form.Label>Correo Electrónico:</Form.Label>
+                            <Form.Control
+                                type="email"
+                                name="email"
+                                value={formData.email}
+                                onChange={handleChange}
+                                required
+                            />
+                        </Form.Group>
+                        <Button variant="primary" type="submit">
+                            Registrarse
+                        </Button>
+                    </Form>
+                </Col>
+            </Row>
+        </Container>
     );
 };
 
-export default CommentsModal;
+export default Register;

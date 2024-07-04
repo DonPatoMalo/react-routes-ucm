@@ -43,17 +43,29 @@ function FormularioCoffee() {
         formDataToSubmit.append("desc", coffee.description);
         formDataToSubmit.append("price", coffee.price);
         formDataToSubmit.append("foto", coffee.foto);
-
+        console.log({
+            name: coffee.name,
+            desc: coffee.description,
+            price:coffee.price,
+            foto: coffee.foto
+        });
         try {
             const response = await fetch('http://localhost:8080/api/coffee/create', {
                 method: 'POST',
                 headers: {
                     'Authorization': `Bearer ${auth.token}`
                 },
-                body: formDataToSubmit
+                body: {
+                    name : coffee.name,
+                    desc: coffee.description,
+                    price:parseInt(coffee.price, 10),
+                    foto: coffee.foto
+                }
             });
             if (!response.ok) {
+                console.log("error", response);
                 throw new Error('Error creating coffee');
+
             }
             return await response.json();
         } catch (e) {
