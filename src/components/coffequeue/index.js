@@ -45,9 +45,19 @@ const CoffeQueue = () => {
         });
     };
 
-    const handleDeleteClick = (rowId) => {
-        const newData = data.filter((item) => item.id !== rowId);
-        setData(newData);
+    const handleDeleteClick = async (rowId) => {
+        try {
+            await axios.delete(`http://localhost:8080/api/coffee/deleteCoffee`, {
+                headers: {
+                    'Authorization': `Bearer ${auth.token}`
+                },
+                params: { idCoffee: rowId }
+            });
+            const newData = data.filter((item) => item.idCoffee !== rowId);
+            setData(newData);
+        } catch (error) {
+            console.error("Error deleting coffee:", error);
+        }
     };
 
     const handleEditFormChange = (e) => {
@@ -68,7 +78,7 @@ const CoffeQueue = () => {
     const handleEditFormSubmit = async (e) => {
         e.preventDefault();
         const formDataToSubmit = new FormData();
-        formDataToSubmit.append("id", editRow.id);
+        formDataToSubmit.append("idCoffee", editRow.idCoffee);
         formDataToSubmit.append("name", editFormData.name);
         formDataToSubmit.append("description", editFormData.description);
         formDataToSubmit.append("price", editFormData.price);
@@ -85,7 +95,7 @@ const CoffeQueue = () => {
                 }
             });
             const updatedData = data.map((row) =>
-                row.id === editRow.id ? { ...row, ...response.data } : row
+                row.idCoffee === editRow.idCoffee ? { ...row, ...response.data } : row
             );
             setData(updatedData);
             setEditRow(null);
@@ -121,7 +131,7 @@ const CoffeQueue = () => {
                 <tbody>
                 {data.map((item, index) => (
                     <tr key={index}>
-                        <td>{item.id}</td>
+                        <td>{item.idCoffee}</td>
                         <td>{item.name}</td>
                         <td>{item.description}</td>
                         <td>${new Intl.NumberFormat('en-DE').format(item.price)}</td>
@@ -130,7 +140,7 @@ const CoffeQueue = () => {
                             <Button variant="secondary" onClick={() => handleEditClick(item)}>Editar</Button>
                         </td>
                         <td>
-                            <Button variant="danger" onClick={() => handleDeleteClick(item.id)}>Eliminar</Button>
+                            <Button variant="danger" onClick={() => handleDeleteClick(item.idCoffee)}>Eliminar</Button>
                         </td>
                     </tr>
                 ))}
