@@ -1,30 +1,14 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useContext, useState } from 'react';
 import Button from "react-bootstrap/Button";
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
 import FormGroup from 'react-bootstrap/FormGroup';
 import { FormControl } from "react-bootstrap";
-import { getCoffee } from "../../services/api"; // Adjust the import path if needed
-import { AuthContext } from "../../services/AuthContext";
 import axios from 'axios';
+import { AuthContext } from "../../services/AuthContext";
 
-const CoffeQueue = () => {
-    const [data, setData] = useState([]);
+const CoffeQueue = ({ coffeeList, setCoffeeList }) => {
     const { auth } = useContext(AuthContext);
-
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const coffeeData = await getCoffee(auth.token); // Pass the token if required
-                setData(coffeeData);
-            } catch (error) {
-                console.error("Error fetching coffee data:", error);
-            }
-        };
-
-        fetchData();
-    }, [auth.token]); // Empty dependency array ensures this runs only once on mount
-
     const [editRow, setEditRow] = useState(null);
     const [editFormData, setEditFormData] = useState({
         name: '',
@@ -53,8 +37,8 @@ const CoffeQueue = () => {
                 },
                 params: { idCoffee: rowId }
             });
-            const newData = data.filter((item) => item.idCoffee !== rowId);
-            setData(newData);
+            const newData = coffeeList.filter((item) => item.idCoffee !== rowId);
+            setCoffeeList(newData);
         } catch (error) {
             console.error("Error deleting coffee:", error);
         }
@@ -65,7 +49,7 @@ const CoffeQueue = () => {
         if (name === "foto") {
             setEditFormData({
                 ...editFormData,
-                [name]: files[0], // Handle file input
+                [name]: files[0],
             });
         } else {
             setEditFormData({
@@ -94,20 +78,14 @@ const CoffeQueue = () => {
                     'Content-Type': 'multipart/form-data',
                 }
             });
-            const updatedData = data.map((row) =>
+            const updatedData = coffeeList.map((row) =>
                 row.idCoffee === editRow.idCoffee ? { ...row, ...response.data } : row
             );
-            setData(updatedData);
+            setCoffeeList(updatedData);
             setEditRow(null);
         } catch (error) {
             console.error('Error updating coffee:', error);
         }
-    };
-
-    const handleStatusChange = (status) => {
-        setEditFormData((prev) => ({
-            ...prev, status: status
-        }));
     };
 
     const handleCancel = () => {
@@ -129,7 +107,7 @@ const CoffeQueue = () => {
                 </tr>
                 </thead>
                 <tbody>
-                {data.map((item, index) => (
+                {coffeeList.map((item, index) => (
                     <tr key={index}>
                         <td>{item.idCoffee}</td>
                         <td>{item.name}</td>

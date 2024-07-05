@@ -5,7 +5,7 @@ import { FormControl } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import { AuthContext } from "../../services/AuthContext.js";
 
-function FormularioCoffee() {
+function FormularioCoffee({ onCoffeeAdded }) {
     const initialState = {
         name: '',
         description: '',
@@ -21,7 +21,7 @@ function FormularioCoffee() {
         if (name === "foto") {
             setFormData({
                 ...formData,
-                [name]: files[0], // Corrected: handle file input
+                [name]: files[0],
             });
         } else {
             setFormData({
@@ -34,6 +34,9 @@ function FormularioCoffee() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         const response = await createCoffee(formData);
+        if (response) {
+            onCoffeeAdded();
+        }
         console.log(response);
     };
 
@@ -50,7 +53,7 @@ function FormularioCoffee() {
                 headers: {
                     'Authorization': `Bearer ${auth.token}`
                 },
-                body: formDataToSubmit // Use formDataToSubmit here
+                body: formDataToSubmit
             });
             if (!response.ok) {
                 console.log("error", response);

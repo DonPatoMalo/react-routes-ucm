@@ -12,7 +12,7 @@ function Menu() {
     const commonLinks = [
         { name: 'Inicio', to: '/inicio' },
         { name: 'Coffees', to: '/menu' },
-        { name: 'Acerca de', to: '/acerca-de' }
+        { name: 'Acerca de', to: '/acercade' }
     ];
 
     const notLoggedInLinks = [
@@ -28,6 +28,7 @@ function Menu() {
     const adminLinks = [
         { name: 'Gestion Coffees', to: '/gestion-coffees' },
         { name: 'Clientes', to: '/userlist' },
+        { name: 'Logout', onClick: handleLogout },
         //{ name: 'Logout', onClick: handleLogout },
     ];
 
