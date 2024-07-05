@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useContext } from 'react';
 import { AuthContext } from '../../services/AuthContext';
 import { getComments } from '../../services/api';
 import CommentsModal from './../coffequeue/CommentsModal.js';

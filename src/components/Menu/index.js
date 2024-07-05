@@ -27,8 +27,8 @@ function Menu() {
 
     const adminLinks = [
         { name: 'Gestion Coffees', to: '/gestion-coffees' },
-        { name: 'Clientes', to: '/user-management' },
-        { name: 'Logout', onClick: handleLogout },
+        { name: 'Clientes', to: '/userlist' },
+        //{ name: 'Logout', onClick: handleLogout },
     ];
 
     let routes = [...commonLinks];

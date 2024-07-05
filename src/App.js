@@ -11,6 +11,7 @@ import GestionCoffee from "./pages/GestionCoffee";
 import Coffees from "./pages/Coffees";
 import {PrivateRoute} from "./auth/PrivateRoute";
 import Register from "./components/Register";
+import UserList from "./components/Register/UserList";
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
           <Route path="/login" element={<Login />}/>
           <Route path="/gestion-coffees" element={<PrivateRoute><GestionCoffee /></PrivateRoute>}/>
           <Route path="/register" element={<Register />}/>
+          <Route path="/userlist" element={<UserList />}/>
         <Route path="*" element={<p>Ups, no existe la ruta</p>}/>
       </Routes>
 

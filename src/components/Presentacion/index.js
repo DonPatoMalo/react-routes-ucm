@@ -5,16 +5,23 @@ function Presentacion() {
     const cards = [
         {
             title: "Nuestras Maquinas",
-            description: "Maquinas wenas po loco",
-            textButton:"Lorealas aqui",
+            description: "La última generación de maquinas de café las puedes encontrar aquí",
+            textButton:"Conocélas",
             link: "https://www.kitchencenter.cl/cdn/shop/products/cafetera-espresso-perfect-brew-molino-integrado-bvstem7300-oster-2.jpg?v=1717614293&width=823"
         },
         {
             title: "Nuestros Granos",
-            description: "Cafe importado 100% real",
+            description: "Contamos con café de diversos origenes, elige a tu gusto",
             textButton:"Mas informacion",
             link:"https://i.pinimg.com/550x/50/a4/f8/50a4f8a8aaa5804698fd75037f199497.jpg"
+        },
+        {
+            title: "Sucursales",
+            description: "Conoce nuestras nuevas sucursales en Talca, San Javier y Linares",
+            textButton:"Mas informacion",
+            link:"https://lacafeteriatalca.cl/wp-content/uploads/2020/08/carrusel1.jpg"
         }
+
     ]
 
     return (

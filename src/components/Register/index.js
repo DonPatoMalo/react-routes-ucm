@@ -6,7 +6,7 @@ const Register = () => {
     const navigate = useNavigate();
 
     const [formData, setFormData] = useState({
-        username: '',
+        name: '',
         password: '',
         email: '',
         locked: false,
@@ -56,7 +56,7 @@ const Register = () => {
                             <Form.Control
                                 type="text"
                                 name="username"
-                                value={formData.username}
+                                value={formData.name}
                                 onChange={handleChange}
                                 required
                             />

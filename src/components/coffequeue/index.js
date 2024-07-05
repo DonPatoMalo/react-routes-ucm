@@ -3,7 +3,7 @@ import Button from "react-bootstrap/Button";
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
 import FormGroup from 'react-bootstrap/FormGroup';
-import { FormControl, Dropdown, DropdownDivider, DropdownButton, InputGroup } from "react-bootstrap";
+import { FormControl } from "react-bootstrap";
 import { getCoffee } from "../../services/api"; // Adjust the import path if needed
 import { AuthContext } from "../../services/AuthContext";
 import axios from 'axios';
